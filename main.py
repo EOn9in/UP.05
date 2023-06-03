@@ -575,7 +575,7 @@ class RulesView(arcade.View):
             width_btn_back = 250
             height_btn_back = 60
             font_size = 15
-        bg_tex = load_texture(":resources:gui_basic_assets/window/grey_panel.png")
+        bg_tex = load_texture("Panel.png")
         text_area = UITextArea(x=self.width / 4,
                                y=self.height / 3.2,
                                width=self.width / 2,

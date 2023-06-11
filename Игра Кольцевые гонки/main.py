@@ -372,8 +372,16 @@ class SettingsView(arcade.View):
         self.width, self.height = self.window.get_size()
         if self.width == 800:
             size_sound_btn = 0.5
+            width_btn_back = 200
+            height_btn_back = 50
+            back_x, back_y = 250, 320
+            X_box,y_box = -140, 80
         else:
             size_sound_btn = 0.8
+            width_btn_back = 250
+            height_btn_back = 60
+            back_x, back_y = 500, 340
+            X_box,y_box = -180, 80
 
         self.manager = UIManager()
         self.manager.enable()
@@ -435,18 +443,13 @@ class SettingsView(arcade.View):
 
         box.add(self.up_button)
 
-        self.uimanager.add(arcade.gui.UIAnchorWidget(child=box, align_x= -140, align_y= 80))
-        if self.width == 800:
-            width_btn_back = 200
-            height_btn_back = 50
-        else:
-            width_btn_back = 250
-            height_btn_back = 60
+        self.uimanager.add(arcade.gui.UIAnchorWidget(child=box, align_x= X_box, align_y= y_box))
+
         back_button = arcade.gui.UIFlatButton(text="Назад",
                                                     width=width_btn_back, height=height_btn_back)
 
         self.uimanager.add(
-                    arcade.gui.UIAnchorWidget(align_x=250, align_y=-300,anchor_x = "center",anchor_y="center", child=back_button))
+                    arcade.gui.UIAnchorWidget(align_x=back_x, align_y=-back_y,anchor_x = "center",anchor_y="center", child=back_button))
         
         @back_button.event("on_click")
         def on_click_message(event):
@@ -555,7 +558,11 @@ class SettingsView(arcade.View):
 class RulesView(arcade.View):
 
     def on_show_view(self):
-        self.background = arcade.load_texture("QR_fon.png")
+        self.width, self.height = self.window.get_size()
+        if self.width == 800:
+            self.background = arcade.load_texture("QR_fon_800.png")
+        else:
+            self.background = arcade.load_texture("QR_fon.png")
         
     def setup(self):
         self.uimanager = arcade.gui.UIManager()
@@ -571,10 +578,13 @@ class RulesView(arcade.View):
             width_btn_back = 200
             height_btn_back = 50
             font_size = 12
+            back_x, back_y = 250, -290
         else:
             width_btn_back = 250
             height_btn_back = 60
             font_size = 15
+            back_x, back_y = 500, -340
+
         bg_tex = load_texture("Panel.png")
         text_area = UITextArea(x=self.width / 4,
                                y=self.height / 3.2,
@@ -595,7 +605,7 @@ class RulesView(arcade.View):
                                                width=width_btn_back,height=height_btn_back)
 
         self.uimanager.add(
-            arcade.gui.UIAnchorWidget(align_x=250,align_y=-300,anchor_y="center",anchor_x='center',
+            arcade.gui.UIAnchorWidget(align_x=back_x,align_y=back_y,anchor_y="center",anchor_x='center',
                 child=back_button))
         
 
@@ -920,13 +930,11 @@ class Level2View(arcade.View):
         if key == arcade.key.ENTER:
             self.game_started = True
 
-
     def update(self, delta_time):
         if time.time() - self.time_since_last_color_change >= 3:
             self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
             self.time_since_last_color_change = time.time()
         
-
         if self.game_started:
             self.car.update(self.window, self.game_started)
             self.car_bot.update(self.window, self.car)
@@ -981,7 +989,7 @@ class LevelPixelView(arcade.View):
         self.uimanager = arcade.gui.UIManager()
         self.uimanager.enable()
         arcade.set_background_color(arcade.color.DARK_TANGERINE)
-        self.background = arcade.load_texture("Pixel2.png")
+        self.background = arcade.load_texture("Pixel.png")
         self.crash_sound = arcade.sound.load_sound("Звук аварии 8 бит.mp3")
         self.background_music = arcade.sound.load_sound("Pixel.mp3")
         self.music_player = arcade.sound.play_sound(self.background_music, looping=True)

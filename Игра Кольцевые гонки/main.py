@@ -43,16 +43,11 @@ class ZastavkaView(arcade.View):
         arcade.draw_lrwh_rectangle_textured(0, 0,
                                             self.width, self.height,
                                             self.background)
-        if self.width == 800:
-            arcade.draw_rectangle_filled(self.width // 2, self.height // 2 - 30, 700, 120, arcade.color.BLACK + (150,))
-            arcade.draw_text("Здравствуйте, кликните мышью чтобы продолжить", self.width / 2, self.height / 2,
-                            arcade.color.WHITE, font_size=20, anchor_x="center",  font_name="Arial")
-            arcade.draw_text("Нажмите F, чтобы включить полноэкранный режим", self.width / 2, self.height / 2 - 60, arcade.color.WHITE, font_size=15, anchor_x="center",font_name="Arial")
-        else:
-            arcade.draw_rectangle_filled(self.width // 2, self.height // 2 - 30, 1000, 220, arcade.color.BLACK + (150,))
-            arcade.draw_text("Здравствуйте, кликните мышью чтобы продолжить", self.width / 2, self.height / 2,
-                            arcade.color.WHITE, font_size=30, anchor_x="center", font_name="Arial")
-            arcade.draw_text("Нажмите F, чтобы включить полноэкранный режим", self.width / 2, self.height / 2 - 100, arcade.color.WHITE, font_size=25, anchor_x="center",  font_name="Arial")
+    
+        arcade.draw_rectangle_filled(self.width * 0.5, self.height * 0.4625, self.width * 0.875, self.height * 0.15, arcade.color.BLACK + (150,))
+        arcade.draw_text("Здравствуйте, кликните мышью чтобы продолжить", self.width * 0.5, self.height * 0.4625,
+                        arcade.color.WHITE, font_size=self.width * 0.025, anchor_x="center",  font_name="Arial")
+        arcade.draw_text("Нажмите F, чтобы включить полноэкранный режим", self.width * 0.5, self.height * 0.415, arcade.color.WHITE, font_size=self.width* 0.0188, anchor_x="center",font_name="Arial")
 
 
     def on_key_press(self, key, modifiers):
@@ -89,7 +84,7 @@ class MenuView(arcade.View):
             height_btn = 70
 
  # Создайте вертикальную группу блоков для выравнивания кнопок
-        self.v_box = arcade.gui.UIBoxLayout(x=self.width // 2, y= self.height // 2, align='center')
+        self.v_box = arcade.gui.UIBoxLayout(x=self.width * 0.5, y= self.height * 0.5, align='center')
 
         start_button = arcade.gui.UIFlatButton(text="Играть", width=width_btn, height=height_btn)
         self.v_box.add(start_button.with_space_around(bottom=30))
@@ -137,7 +132,7 @@ class MenuView(arcade.View):
         arcade.draw_lrwh_rectangle_textured(0, 0,
                                             self.width,self.height,
                                             self.background)
-        arcade.draw_text("Кольцевые гонки", self.width // 2, self.height - 140,
+        arcade.draw_text("Кольцевые гонки", self.width * 0.5, self.height * 0.825,
                          arcade.color.BLACK, font_size=50, anchor_x="center", font_name="Kenney Future")
         
         self.manager.draw()
@@ -999,7 +994,7 @@ class LevelPixelView(arcade.View):
         self.total_time = 0.0
         self.output = "00:00:00"
 
-        self.car = Car("PixelCar.png", 0.15)
+        self.car = Car("Picture/PixelCar.png", 0.15)
         self.car_crash_texture = arcade.load_texture("Picture/PixelCarCrash.png")
         self.car_bot_crash = arcade.load_texture("Picture/PCarCrash.png")
         if self.width == 800:
@@ -1326,7 +1321,7 @@ class LevelSpaceView(arcade.View):
             self.window.show_view(win_window)
                 
 
-        if (seconds % random.randint(4,8) == 0) and (seconds_100s == random.randint(1,100)):
+        if (seconds % random.randint(2,10) == 0) and (seconds_100s == random.randint(1,100)):
             self.car_bot.inner_lane_bot = not self.car_bot.inner_lane_bot
 
 
@@ -1598,7 +1593,7 @@ class WinView(arcade.View):
         self.manager = UIManager()
         self.manager.enable()
         self.width, self.height = self.window.get_size()
-        bg_tex = load_texture(":resources:gui_basic_assets/window/grey_panel.png")
+        bg_tex = load_texture("Picture/Panel_win.png")
         text_area = UITextArea(x=self.width / 4,
                                y=self.height / 3.2,
                                width=self.width / 2,
@@ -1675,7 +1670,7 @@ class LoseViewCrash(arcade.View):
         self.manager = UIManager()
         self.manager.enable()
         self.width, self.height = self.window.get_size()
-        bg_tex = load_texture(":resources:gui_basic_assets/window/grey_panel.png")
+        bg_tex = load_texture("Picture/Panel_lose.png")
         text_area = UITextArea(x=self.width / 4,
                                y=self.height / 3.2,
                                width=self.width / 2,

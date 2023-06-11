@@ -29,7 +29,7 @@ class ZastavkaView(arcade.View):
             SettingsView.media_player = SettingsView.my_music.play(loop=True)
     
     def on_show_view(self):
-        Zastavki = ['Заставка 1.jpg', 'Заставка 2.jpg', 'Заставка 3.jpg', 'Заставка 4.jpeg', "Заставка 5.jpg", "Заставка 6.jpg", "Заставка 7.jpg"]
+        Zastavki = ['Picture/Заставка 1.jpg', 'Picture/Заставка 2.jpg', 'Picture/Заставка 3.jpg', 'Picture/Заставка 4.jpeg', "Picture/Заставка 5.jpg", "Picture/Заставка 6.jpg", "Picture/Заставка 7.jpg"]
         fon = random.choice(Zastavki)
         self.background = arcade.load_texture(fon)
         self.play_music()
@@ -79,7 +79,7 @@ class MenuView(arcade.View):
         self.manager.enable()
         self.width, self.height = self.window.get_size()
 
-        self.background = arcade.load_texture("Fon.png")
+        self.background = arcade.load_texture("Picture/Fon.png")
 
         if self.width == 800:
             width_btn = 300
@@ -148,7 +148,7 @@ class StartView(arcade.View):
     space_button_created = False
 
     def on_show_view(self):
-        self.background = arcade.load_texture("Fon.png")
+        self.background = arcade.load_texture("Picture/Fon.png")
         
     def setup(self):
         self.width, self.height = self.window.get_size()
@@ -535,7 +535,7 @@ class SettingsView(arcade.View):
 
     def on_show_view(self):
         SettingsView.paused = True
-        self.background = arcade.load_texture("Fon.png")
+        self.background = arcade.load_texture("Picture/Fon.png")
         self.uimanager.enable()
         if self.my_music is None:
             self.my_music = arcade.load_sound(self.songs[self.cur_song_index])
@@ -560,9 +560,9 @@ class RulesView(arcade.View):
     def on_show_view(self):
         self.width, self.height = self.window.get_size()
         if self.width == 800:
-            self.background = arcade.load_texture("QR_fon_800.png")
+            self.background = arcade.load_texture("Picture/QR_fon_800.png")
         else:
-            self.background = arcade.load_texture("QR_fon.png")
+            self.background = arcade.load_texture("Picture/QR_fon.png")
         
     def setup(self):
         self.uimanager = arcade.gui.UIManager()
@@ -585,7 +585,7 @@ class RulesView(arcade.View):
             font_size = 15
             back_x, back_y = 500, -340
 
-        bg_tex = load_texture("Panel.png")
+        bg_tex = load_texture("Picture/Panel.png")
         text_area = UITextArea(x=self.width / 4,
                                y=self.height / 3.2,
                                width=self.width / 2,
@@ -644,16 +644,16 @@ class Level1View(arcade.View):
         self.uimanager = arcade.gui.UIManager()
         self.uimanager.enable()
         arcade.set_background_color(arcade.color.WHITE)
-        self.background = arcade.load_texture("1.png")
-        self.crash_sound = arcade.sound.load_sound("Звук столкновения.mp3")
+        self.background = arcade.load_texture("Picture/Трасса уровень 1.png")
+        self.crash_sound = arcade.sound.load_sound("Sound/Звук столкновения.mp3")
 
 
         self.total_time = 0.0
         self.output = "00:00:00"
 
-        self.car = Car("Car1.png", 1)
-        self.car_crash_texture = arcade.load_texture("Car_Crash.png")
-        self.car_bot_crash = arcade.load_texture("Car_bot_Crash.png")
+        self.car = Car("Picture/Car.png", 1)
+        self.car_crash_texture = arcade.load_texture("Picture/Car_Crash.png")
+        self.car_bot_crash = arcade.load_texture("Picture/Car_bot_Crash.png")
         if self.width == 800:
             self.car.center_x = CIRCLE_RADIUS_INNER - 50
             self.car.center_y = SCREEN_HEIGHT / 2
@@ -661,7 +661,7 @@ class Level1View(arcade.View):
             self.car.center_x = CIRCLE_RADIUS_INNER + 280
             self.car.center_y = SCREEN_HEIGHT / 2
 
-        self.car_bot = Car_Computer("Маши.png", 1)
+        self.car_bot = Car_Computer("Picture/Car_bot.png", 1)
         if self.width == 800:
             self.car_bot.center_x = CIRCLE_RADIUS_INNER + 350
             self.car_bot.center_y = SCREEN_HEIGHT / 3
@@ -689,7 +689,7 @@ class Level1View(arcade.View):
         self.color = arcade.color.BLACK
         self.time_since_last_color_change = time.time()
 
-        self.pozarnay_car = arcade.Sprite('Пожарка.png', 0.2)
+        self.pozarnay_car = arcade.Sprite('Picture/Пожарка.png', 0.2)
         if self.width == 800:
             self.pozarnay_car.center_x = 40
             self.pozarnay_car.center_y = 420
@@ -697,7 +697,7 @@ class Level1View(arcade.View):
             self.pozarnay_car.center_x = 450
             self.pozarnay_car.center_y = 440
 
-        self.pozarn_man = arcade.Sprite('Пож.png', 0.04)
+        self.pozarn_man = arcade.Sprite('Picture/Пожарный.png', 0.04)
         if self.width == 800:
             self.pozarn_man.center_x = 90
             self.pozarn_man.center_y = 390
@@ -821,8 +821,8 @@ class Level2View(arcade.View):
         self.uimanager = arcade.gui.UIManager()
         self.uimanager.enable()
         arcade.set_background_color(arcade.color.WHITE)
-        self.background = arcade.load_texture("Трасса 1.png")
-        self.crash_sound = arcade.sound.load_sound("Звук столкновения.mp3")
+        self.background = arcade.load_texture("Picture/Трасса уровень 2.png")
+        self.crash_sound = arcade.sound.load_sound("Sound/Звук столкновения.mp3")
 
         self.total_time = 0.0
         self.output = "00:00:00"
@@ -831,9 +831,9 @@ class Level2View(arcade.View):
             size_car = 1
         else:
             size_car = 1.5
-        self.car = Car_Level2("Car1.png", size_car)
-        self.car_crash_texture = arcade.load_texture("Car_Crash.png")
-        self.car_bot_crash = arcade.load_texture("Car_bot_Crash.png")
+        self.car = Car_Level2("Picture/Car.png", size_car)
+        self.car_crash_texture = arcade.load_texture("Picture/Car_Crash.png")
+        self.car_bot_crash = arcade.load_texture("Picture/Car_bot_Crash.png")
         if self.width == 800:
             self.car.center_x = ELLIPSE_SEMIMAJOR_AXIS - 190
             self.car.center_y = SCREEN_HEIGHT / 2
@@ -841,7 +841,7 @@ class Level2View(arcade.View):
             self.car.center_x = ELLIPSE_SEMIMAJOR_AXIS - 190
             self.car.center_y = SCREEN_HEIGHT / 2
 
-        self.car_bot = Car_Computer_Level2("Маши.png", size_car)
+        self.car_bot = Car_Computer_Level2("Picture/Car_bot.png", size_car)
         if self.width == 800:
             self.car_bot.center_x = ELLIPSE_SEMIMAJOR_AXIS_OUTER + 350
             self.car_bot.center_y = SCREEN_HEIGHT / 2
@@ -989,9 +989,9 @@ class LevelPixelView(arcade.View):
         self.uimanager = arcade.gui.UIManager()
         self.uimanager.enable()
         arcade.set_background_color(arcade.color.DARK_TANGERINE)
-        self.background = arcade.load_texture("Pixel.png")
-        self.crash_sound = arcade.sound.load_sound("Звук аварии 8 бит.mp3")
-        self.background_music = arcade.sound.load_sound("Pixel.mp3")
+        self.background = arcade.load_texture("Picture/Pixel.png")
+        self.crash_sound = arcade.sound.load_sound("Sound/Звук аварии 8 бит.mp3")
+        self.background_music = arcade.sound.load_sound("Sound/Pixel.mp3")
         self.music_player = arcade.sound.play_sound(self.background_music, looping=True)
         self.paused = False
 
@@ -1000,8 +1000,8 @@ class LevelPixelView(arcade.View):
         self.output = "00:00:00"
 
         self.car = Car("PixelCar.png", 0.15)
-        self.car_crash_texture = arcade.load_texture("PixelCarCrash.png")
-        self.car_bot_crash = arcade.load_texture("PCarCrash.png")
+        self.car_crash_texture = arcade.load_texture("Picture/PixelCarCrash.png")
+        self.car_bot_crash = arcade.load_texture("Picture/PCarCrash.png")
         if self.width == 800:
             self.car.center_x = CIRCLE_RADIUS_INNER - 50
             self.car.center_y = SCREEN_HEIGHT / 2
@@ -1009,7 +1009,7 @@ class LevelPixelView(arcade.View):
             self.car.center_x = CIRCLE_RADIUS_INNER + 280
             self.car.center_y = SCREEN_HEIGHT / 2
 
-        self.car_bot = Car_Computer("PCar.png", 0.15)
+        self.car_bot = Car_Computer("Picture/PCar.png", 0.15)
         if self.width == 800:
             self.car_bot.center_x = CIRCLE_RADIUS_INNER + 350
             self.car_bot.center_y = SCREEN_HEIGHT / 3
@@ -1140,7 +1140,7 @@ class LevelPixelView(arcade.View):
                 
 
 
-        if (seconds % random.randint(4,8) == 0) and (seconds_100s == random.randint(1,100)):
+        if (seconds % random.randint(2,10) == 0) and (seconds_100s == random.randint(1,100)):
             self.car_bot.inner_lane_bot = not self.car_bot.inner_lane_bot
 
 
@@ -1180,9 +1180,9 @@ class LevelSpaceView(arcade.View):
         self.width, self.height = self.window.get_size()
         self.uimanager = arcade.gui.UIManager()
         self.uimanager.enable()
-        self.background = arcade.load_texture("КосмосФон.jpg")
-        self.crash_sound = arcade.sound.load_sound("Звук аварии 8 бит.mp3")
-        self.background_music = arcade.sound.load_sound("Космос.mp3")
+        self.background = arcade.load_texture("Picture/КосмосФон.jpg")
+        self.crash_sound = arcade.sound.load_sound("Sound/Звук аварии 8 бит.mp3")
+        self.background_music = arcade.sound.load_sound("Sound/Космос.mp3")
         self.music_player = arcade.sound.play_sound(self.background_music, looping=True)
         self.paused = False
 
@@ -1190,8 +1190,8 @@ class LevelSpaceView(arcade.View):
         self.total_time = 0.0
         self.output = "00:00:00"
 
-        self.car = Car("Ракета.png", 0.15)
-        self.car_crash_texture = arcade.load_texture("Ракета горит.png")
+        self.car = Car("Picture/Ракета.png", 0.15)
+        self.car_crash_texture = arcade.load_texture("Picture/Ракета горит.png")
         if self.width == 800:
             self.car.center_x = CIRCLE_RADIUS_INNER - 50
             self.car.center_y = SCREEN_HEIGHT / 2
@@ -1199,7 +1199,7 @@ class LevelSpaceView(arcade.View):
             self.car.center_x = CIRCLE_RADIUS_INNER + 280
             self.car.center_y = SCREEN_HEIGHT / 2
 
-        self.car_bot = Car_Computer("Астероид.png", 0.1)
+        self.car_bot = Car_Computer("Picture/Астероид.png", 0.1)
         if self.width == 800:
             self.car_bot.center_x = CIRCLE_RADIUS_INNER + 350
             self.car_bot.center_y = SCREEN_HEIGHT / 3
@@ -1215,7 +1215,7 @@ class LevelSpaceView(arcade.View):
             x = 660
             y = 350
             
-        self.planet = arcade.Sprite('Планета.png',0.35)
+        self.planet = arcade.Sprite('Picture/Планета.png',0.35)
         self.planet.center_x = self.width / 2
         self.planet.center_y = self.height / 2
 
@@ -1354,8 +1354,8 @@ class LevelWorkoutView(arcade.View):
         self.width, self.height = self.window.get_size()
         self.uimanager = arcade.gui.UIManager()
         self.uimanager.enable()
-        self.background = arcade.load_texture('трасса тренировка.png')
-        self.crash_sound = arcade.sound.load_sound("Звук столкновения.mp3")
+        self.background = arcade.load_texture('Picture/трасса тренировка.png')
+        self.crash_sound = arcade.sound.load_sound("Sound/Звук столкновения.mp3")
 
         self.total_time = 0.0
         self.output = "00:00:00"
@@ -1364,8 +1364,8 @@ class LevelWorkoutView(arcade.View):
             size_car = 1
         else:
             size_car = 1.5
-        self.car = Car_Level2("Car1.png", size_car)
-        self.car_crash_texture = arcade.load_texture("Car_Crash.png")
+        self.car = Car_Level2("Picture/Car.png", size_car)
+        self.car_crash_texture = arcade.load_texture("Picture/Car_Crash.png")
         if self.width == 800:
             self.car.center_x = ELLIPSE_SEMIMAJOR_AXIS_OUTER + 350
             self.car.center_y = SCREEN_HEIGHT / 2
@@ -1590,7 +1590,7 @@ class LevelWorkoutView(arcade.View):
 class WinView(arcade.View):
 
     def on_show_view(self):
-        self.background = arcade.load_texture("Fon 3.png")
+        self.background = arcade.load_texture("Picture/Fon 3.png")
         
     def setup(self):
         self.uimanager = arcade.gui.UIManager()
@@ -1667,7 +1667,7 @@ class WinView(arcade.View):
 class LoseViewCrash(arcade.View):
 
     def on_show_view(self):
-        self.background = arcade.load_texture("Fon 2.png")
+        self.background = arcade.load_texture("Picture/Fon 2.png")
         
     def setup(self):
         self.uimanager = arcade.gui.UIManager()
@@ -2110,7 +2110,7 @@ def check_for_collision(sprite1, sprite2):
 
 def main():
     window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, center_window=True)
-    window.set_icon(pyglet_load('Icon.ico'))
+    window.set_icon(pyglet_load('Picture/Icon.ico'))
     zast_view = ZastavkaView()
     window.show_view(zast_view)
     arcade.run()

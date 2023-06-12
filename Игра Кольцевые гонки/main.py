@@ -749,8 +749,8 @@ class Level1View(arcade.View):
             self.car.inner_lane = not self.car.inner_lane
 
         if key == arcade.key.ESCAPE:
-            pause = PauseView(self)
-            self.window.show_view(pause)
+            pause_view = PauseView(self, Level1View)
+            self.window.show_view(pause_view)
 
         if key == arcade.key.ENTER:
             self.game_started = True
@@ -911,7 +911,7 @@ class Level2View(arcade.View):
         if key == arcade.key.SPACE:
             self.car.inner_lane = not self.car.inner_lane
         if key == arcade.key.ESCAPE:
-            pause = PauseViewLevel2(self)
+            pause = PauseView(self, Level2View)
             self.window.show_view(pause)
         if key == arcade.key.ENTER:
             self.game_started = True
@@ -1084,7 +1084,7 @@ class LevelPixelView(arcade.View):
             self.car.inner_lane = not self.car.inner_lane
 
         if key == arcade.key.ESCAPE:
-            pause = PauseViewPixel(self)
+            pause = PauseView(self, LevelPixelView)
             self.window.show_view(pause)
             if self.music_player.playing:  # Поставить музыку на паузу
                 self.music_player.pause()
@@ -1171,7 +1171,6 @@ class LevelSpaceView(arcade.View):
         self.background_music = arcade.sound.load_sound("Sound/Космос.mp3")
         self.music_player = arcade.sound.play_sound(self.background_music, looping=True)
         self.paused = False
-
 
         self.total_time = 0.0
         self.output = "00:00:00"
@@ -1271,7 +1270,7 @@ class LevelSpaceView(arcade.View):
             self.car.inner_lane = not self.car.inner_lane
 
         if key == arcade.key.ESCAPE:
-            pause = PauseViewSpace(self)
+            pause = PauseView(self, LevelSpaceView)
             self.window.show_view(pause)
             if self.music_player.playing:  # Поставить музыку на паузу
                 self.music_player.pause()
@@ -1531,7 +1530,7 @@ class LevelWorkoutView(arcade.View):
         if key == arcade.key.SPACE:
             self.car.inner_lane = not self.car.inner_lane
         if key == arcade.key.ESCAPE:
-            pause = PauseViewWorkout(self)
+            pause = PauseView(self, LevelWorkoutView)
             self.window.show_view(pause)
         if key == arcade.key.ENTER:
             self.game_started = True
@@ -1724,11 +1723,11 @@ class LoseViewCrash(arcade.View):
         self.manager.draw()
         self.uimanager.draw()
 
-
 class PauseView(arcade.View):
-    def __init__(self, game_view):
+    def __init__(self, game_view, current_level):
         super().__init__()
         self.game_view = game_view
+        self.current_level = current_level
     def on_show_view(self):
         arcade.set_background_color(arcade.color.BLIZZARD_BLUE)
     def on_draw(self):
@@ -1756,176 +1755,17 @@ class PauseView(arcade.View):
                          font_size=20,
                          anchor_x="center")
     def on_key_press(self, key, _modifiers):
-        if key == arcade.key.ESCAPE:   # Пауза
+        if key == arcade.key.ESCAPE:   # Продолжить
             self.window.show_view(self.game_view)
             arcade.set_background_color(arcade.color.WHITE)
-        if key == arcade.key.ENTER:  # Перезапуск
-            game_window = Level1View()
-            game_window.setup()
-            self.window.show_view(game_window)
+            if self.current_level == LevelPixelView or self.current_level == LevelSpaceView:
+                if self.game_view.paused:
+                    self.game_view.music_player.play()
+                    self.game_view.paused = False  # Пауза
+                    self.current_level.stop_music(self)
 
-class PauseViewLevel2(arcade.View):
-    def __init__(self, game_view):
-        super().__init__()
-        self.game_view = game_view
-    def on_show_view(self):
-        arcade.set_background_color(arcade.color.TEA_ROSE)
-    def on_draw(self):
-        self.width, self.height = self.window.get_size() 
-        self.clear()
-        player_sprite = self.game_view.car
-        player_sprite.draw()
-        arcade.draw_lrtb_rectangle_filled(left=player_sprite.left,
-                                          right=player_sprite.right,
-                                          top=player_sprite.top,
-                                          bottom=player_sprite.bottom,
-                                          color=arcade.color.TEA_ROSE + (200,))
-        arcade.draw_text("ПАУЗА", self.width / 2, self.height / 2 + 50,
-                         arcade.color.BLACK, font_size=50, anchor_x="center")
-        arcade.draw_text("Нажмите Esc,чтобы продолжить",
-                         self.width / 2,
-                         self.height / 2,
-                         arcade.color.BLACK,
-                         font_size=20,
-                         anchor_x="center")
-        arcade.draw_text("Нажмите Enter, чтобы начать заново",
-                         self.width / 2,
-                         self.height / 2 - 30,
-                         arcade.color.BLACK,
-                         font_size=20,
-                         anchor_x="center")
-    def on_key_press(self, key, _modifiers):
-        if key == arcade.key.ESCAPE:   # Пауза
-            self.window.show_view(self.game_view)
-            arcade.set_background_color(arcade.color.WHITE)
         if key == arcade.key.ENTER:  # Перезапуск
-            game_window = Level2View()
-            game_window.setup()
-            self.window.show_view(game_window)
-
-class PauseViewPixel(arcade.View):
-    def __init__(self, game_view):
-        super().__init__()
-        self.game_view = game_view
-    def on_show_view(self):
-        arcade.set_background_color(arcade.color.DARK_TANGERINE)
-    def on_draw(self):
-        self.width, self.height = self.window.get_size()   
-        self.clear()
-        player_sprite = self.game_view.car
-        player_sprite.draw()
-        arcade.draw_lrtb_rectangle_filled(left=player_sprite.left,
-                                          right=player_sprite.right,
-                                          top=player_sprite.top,
-                                          bottom=player_sprite.bottom,
-                                          color=arcade.color.DARK_TANGERINE + (200,))
-        arcade.draw_text("ПАУЗА", self.width / 2, self.height / 2 + 50,
-                         arcade.color.BLACK, font_size=50, anchor_x="center")
-        arcade.draw_text("Нажмите Esc,чтобы продолжить",
-                         self.width / 2,
-                         self.height / 2,
-                         arcade.color.BLACK,
-                         font_size=20,
-                         anchor_x="center")
-        arcade.draw_text("Нажмите Enter, чтобы начать заново",
-                         self.width / 2,
-                         self.height / 2 - 30,
-                         arcade.color.BLACK,
-                         font_size=20,
-                         anchor_x="center")
-    def on_key_press(self, key, _modifiers):
-        if key == arcade.key.ESCAPE:  # Возобновите музыку при возврате к игре
-            self.window.show_view(self.game_view)
-            arcade.set_background_color(arcade.color.DARK_TANGERINE)
-            if self.game_view.paused:
-                self.game_view.music_player.play()
-                self.game_view.paused = False  # Пауза
-                LevelPixelView.stop_music(self)
-            
-        if key == arcade.key.ENTER:  # Перезапуск
-            game_window = LevelPixelView()
-            game_window.setup()
-            self.window.show_view(game_window)
-
-class PauseViewSpace(arcade.View):
-    def __init__(self, game_view):
-        super().__init__()
-        self.game_view = game_view
-    def on_show_view(self):
-        arcade.set_background_color(arcade.color.BABY_BLUE_EYES)
-    def on_draw(self):
-        self.width, self.height = self.window.get_size()   
-        self.clear()
-        player_sprite = self.game_view.car
-        player_sprite.draw()
-        arcade.draw_lrtb_rectangle_filled(left=player_sprite.left,
-                                          right=player_sprite.right,
-                                          top=player_sprite.top,
-                                          bottom=player_sprite.bottom,
-                                          color=arcade.color.BABY_BLUE_EYES + (200,))
-        arcade.draw_text("ПАУЗА", self.width / 2, self.height / 2 + 50,
-                         arcade.color.BLACK, font_size=50, anchor_x="center")
-        arcade.draw_text("Нажмите Esc,чтобы продолжить",
-                         self.width / 2,
-                         self.height / 2,
-                         arcade.color.BLACK,
-                         font_size=20,
-                         anchor_x="center")
-        arcade.draw_text("Нажмите Enter, чтобы начать заново",
-                         self.width / 2,
-                         self.height / 2 - 30,
-                         arcade.color.BLACK,
-                         font_size=20,
-                         anchor_x="center")
-    def on_key_press(self, key, _modifiers):
-        if key == arcade.key.ESCAPE:   # Пауза
-            self.window.show_view(self.game_view)
-            arcade.set_background_color(arcade.color.BABY_BLUE_EYES)
-            if self.game_view.paused:
-                self.game_view.music_player.play()
-                self.game_view.paused = False  # Пауза
-                LevelSpaceView.stop_music(self)
-        if key == arcade.key.ENTER:  # Перезапуск
-            game_window = LevelSpaceView()
-            game_window.setup()
-            self.window.show_view(game_window)
-
-class PauseViewWorkout(arcade.View):
-    def __init__(self, game_view):
-        super().__init__()
-        self.game_view = game_view
-    def on_show_view(self):
-        arcade.set_background_color(arcade.color.ANDROID_GREEN)
-    def on_draw(self):
-        self.width, self.height = self.window.get_size()   
-        self.clear()
-        player_sprite = self.game_view.car
-        player_sprite.draw()
-        arcade.draw_lrtb_rectangle_filled(left=player_sprite.left,
-                                          right=player_sprite.right,
-                                          top=player_sprite.top,
-                                          bottom=player_sprite.bottom,
-                                          color=arcade.color.ANDROID_GREEN + (200,))
-        arcade.draw_text("ПАУЗА", self.width / 2, self.height / 2 + 50,
-                         arcade.color.BLACK, font_size=50, anchor_x="center")
-        arcade.draw_text("Нажмите Esc,чтобы продолжить",
-                         self.width / 2,
-                         self.height / 2,
-                         arcade.color.BLACK,
-                         font_size=20,
-                         anchor_x="center")
-        arcade.draw_text("Нажмите Enter, чтобы начать заново",
-                         self.width / 2,
-                         self.height / 2 - 30,
-                         arcade.color.BLACK,
-                         font_size=20,
-                         anchor_x="center")
-    def on_key_press(self, key, _modifiers):
-        if key == arcade.key.ESCAPE:   # Пауза
-            self.window.show_view(self.game_view)
-            arcade.set_background_color(arcade.color.BABY_BLUE_EYES)
-        if key == arcade.key.ENTER:  # Перезапуск
-            game_window = LevelWorkoutView()
+            game_window = self.current_level()
             game_window.setup()
             self.window.show_view(game_window)
 

@@ -692,14 +692,6 @@ class Level1View(arcade.View):
             self.pozarnay_car.center_x = 450
             self.pozarnay_car.center_y = 440
 
-        self.pozarn_man = arcade.Sprite('Picture/Пожарный.png', 0.04)
-        if self.width == 800:
-            self.pozarn_man.center_x = 90
-            self.pozarn_man.center_y = 390
-        else:
-            self.pozarn_man.center_x = 480
-            self.pozarn_man.center_y = 395
-
     def on_draw(self):
         self.width, self.height = self.window.get_size()
         arcade.start_render()
@@ -749,7 +741,6 @@ class Level1View(arcade.View):
             self.car.texture = self.car_crash_texture
             self.car_bot.texture = self.car_bot_crash
             self.pozarnay_car.draw()
-            self.pozarn_man.draw()
 
         self.uimanager.draw()
 

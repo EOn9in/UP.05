@@ -650,21 +650,21 @@ class Level1View(arcade.View):
         self.car_crash_texture = arcade.load_texture("Picture/Car_Crash.png")
         self.car_bot_crash = arcade.load_texture("Picture/Car_bot_Crash.png")
         if self.width == 800:
-            self.car.center_x = CIRCLE_RADIUS_INNER - 50
+            self.car.center_x = CIRCLE_RADIUS_INNER + 400
             self.car.center_y = SCREEN_HEIGHT / 2
         else:
-            self.car.center_x = CIRCLE_RADIUS_INNER + 280
+            self.car.center_x = CIRCLE_RADIUS_INNER + 780
             self.car.center_y = SCREEN_HEIGHT / 2
 
         self.car_bot = Car_Computer("Picture/Car_bot.png", 1)
         if self.width == 800:
-            self.car_bot.center_x = CIRCLE_RADIUS_INNER + 350
-            self.car_bot.center_y = SCREEN_HEIGHT / 3
+            self.car_bot.center_x = CIRCLE_RADIUS_INNER - 50
+            self.car_bot.center_y = SCREEN_HEIGHT / 2
             back_button = arcade.gui.UIFlatButton(text="⌂",
                                                width=40,height=40)
         else:
-            self.car_bot.center_x = CIRCLE_RADIUS_INNER + 800
-            self.car_bot.center_y = SCREEN_HEIGHT / 3 + 100
+            self.car_bot.center_x = CIRCLE_RADIUS_INNER + 280
+            self.car_bot.center_y = SCREEN_HEIGHT / 2
             back_button = arcade.gui.UIFlatButton(text="На Главную ⌂",
                                                width=150,height=50)
 
@@ -751,9 +751,13 @@ class Level1View(arcade.View):
         if key == arcade.key.ESCAPE:
             pause_view = PauseView(self, Level1View)
             self.window.show_view(pause_view)
+            self.uimanager.disable()
 
         if key == arcade.key.ENTER:
             self.game_started = True
+    
+    def on_show_view(self):
+        self.uimanager.enable()
 
 
     def on_update(self, delta_time):
@@ -796,7 +800,7 @@ class Level1View(arcade.View):
 
         if self.car.crashed:
             if time.time() - self.car.crash_time >= 1:
-                lose_window = LoseViewCrash()
+                lose_window = LoseViewCrash(Level1View)
                 lose_window.setup()
                 self.window.show_view(lose_window)
 
@@ -815,32 +819,34 @@ class Level2View(arcade.View):
 
         if self.width == 800:
             size_car = 1
+            x,y = 360, 350
         else:
             size_car = 1.5
+            x,y = 630, 370
         self.car = Car_Level2("Picture/Car.png", size_car)
         self.car_crash_texture = arcade.load_texture("Picture/Car_Crash.png")
         self.car_bot_crash = arcade.load_texture("Picture/Car_bot_Crash.png")
         if self.width == 800:
-            self.car.center_x = ELLIPSE_SEMIMAJOR_AXIS - 190
-            self.car.center_y = SCREEN_HEIGHT / 2
+            self.car.center_x = ELLIPSE_SEMIMAJOR_AXIS_OUTER + 350
+            self.car.center_y = SCREEN_HEIGHT / 2 - 70
         else:
-            self.car.center_x = ELLIPSE_SEMIMAJOR_AXIS - 190
-            self.car.center_y = SCREEN_HEIGHT / 2
+            self.car.center_x = ELLIPSE_SEMIMAJOR_AXIS_OUTER + 970
+            self.car.center_y = SCREEN_HEIGHT / 2 - 30
 
         self.car_bot = Car_Computer_Level2("Picture/Car_bot.png", size_car)
         if self.width == 800:
-            self.car_bot.center_x = ELLIPSE_SEMIMAJOR_AXIS_OUTER + 350
+            self.car_bot.center_x = ELLIPSE_SEMIMAJOR_AXIS_OUTER + 400
             self.car_bot.center_y = SCREEN_HEIGHT / 2
             back_button = arcade.gui.UIFlatButton(text="⌂",
                                                width=40,height=40)
         else:
-            self.car_bot.center_x = ELLIPSE_SEMIMAJOR_AXIS_OUTER + 1050
-            self.car_bot.center_y = SCREEN_HEIGHT / 3 + 40
+            self.car_bot.center_x = ELLIPSE_SEMIMAJOR_AXIS_OUTER + 1060
+            self.car_bot.center_y = SCREEN_HEIGHT / 2 + 30
             back_button = arcade.gui.UIFlatButton(text="На Главную ⌂",
                                                width=150,height=50)
         
         self.uimanager.add(
-            arcade.gui.UIAnchorWidget(align_x=360,align_y=350,anchor_y="center",anchor_x='center',
+            arcade.gui.UIAnchorWidget(align_x=x,align_y=y,anchor_y="center",anchor_x='center',
                 child=back_button))
 
         @back_button.event("on_click")
@@ -913,8 +919,12 @@ class Level2View(arcade.View):
         if key == arcade.key.ESCAPE:
             pause = PauseView(self, Level2View)
             self.window.show_view(pause)
+            self.uimanager.disable()
         if key == arcade.key.ENTER:
             self.game_started = True
+
+    def on_show_view(self):
+        self.uimanager.enable()
 
     def update(self, delta_time):
         if time.time() - self.time_since_last_color_change >= 3:
@@ -951,7 +961,7 @@ class Level2View(arcade.View):
 
         if self.car.crashed:
             if time.time() - self.car.crash_time >= 1:
-                lose_window = LoseViewCrash()
+                lose_window = LoseViewCrash(Level2View)
                 lose_window.setup()
                 self.window.show_view(lose_window)
 
@@ -989,23 +999,23 @@ class LevelPixelView(arcade.View):
         self.car_crash_texture = arcade.load_texture("Picture/PixelCarCrash.png")
         self.car_bot_crash = arcade.load_texture("Picture/PCarCrash.png")
         if self.width == 800:
-            self.car.center_x = CIRCLE_RADIUS_INNER - 50
+            self.car.center_x = CIRCLE_RADIUS_INNER + 400
             self.car.center_y = SCREEN_HEIGHT / 2
         else:
-            self.car.center_x = CIRCLE_RADIUS_INNER + 280
+            self.car.center_x = CIRCLE_RADIUS_INNER + 780
             self.car.center_y = SCREEN_HEIGHT / 2
 
         self.car_bot = Car_Computer("Picture/PCar.png", 0.15)
         if self.width == 800:
-            self.car_bot.center_x = CIRCLE_RADIUS_INNER + 350
-            self.car_bot.center_y = SCREEN_HEIGHT / 3
+            self.car_bot.center_x = CIRCLE_RADIUS_INNER - 50
+            self.car_bot.center_y = SCREEN_HEIGHT / 2
             back_button = arcade.gui.UIFlatButton(text="⌂",
                                                width=40,height=40)
             x = 360
             y = 350
         else:
-            self.car_bot.center_x = CIRCLE_RADIUS_INNER + 800
-            self.car_bot.center_y = SCREEN_HEIGHT / 3 + 100
+            self.car_bot.center_x = CIRCLE_RADIUS_INNER + 280
+            self.car_bot.center_y = SCREEN_HEIGHT / 2
             back_button = arcade.gui.UIFlatButton(text="На Главную ⌂",
                                                width=150,height=50)
             x = 660
@@ -1086,13 +1096,16 @@ class LevelPixelView(arcade.View):
         if key == arcade.key.ESCAPE:
             pause = PauseView(self, LevelPixelView)
             self.window.show_view(pause)
+            self.uimanager.disable()
             if self.music_player.playing:  # Поставить музыку на паузу
                 self.music_player.pause()
                 self.paused = True
             
-
         if key == arcade.key.ENTER:
             self.game_started = True
+
+    def on_show_view(self):
+        self.uimanager.enable()
 
 
     def on_update(self, delta_time):
@@ -1139,7 +1152,7 @@ class LevelPixelView(arcade.View):
 
         if self.car.crashed:
             if time.time() - self.car.crash_time >= 1:
-                lose_window = LoseViewCrash()
+                lose_window = LoseViewCrash(LevelPixelView)
                 lose_window.setup()
                 self.window.show_view(lose_window)
                 arcade.sound.stop_sound(self.music_player)
@@ -1178,23 +1191,23 @@ class LevelSpaceView(arcade.View):
         self.car = Car("Picture/Ракета.png", 0.15)
         self.car_crash_texture = arcade.load_texture("Picture/Ракета горит.png")
         if self.width == 800:
-            self.car.center_x = CIRCLE_RADIUS_INNER - 50
+            self.car.center_x = CIRCLE_RADIUS_INNER + 400
             self.car.center_y = SCREEN_HEIGHT / 2
         else:
-            self.car.center_x = CIRCLE_RADIUS_INNER + 280
+            self.car.center_x = CIRCLE_RADIUS_INNER + 780
             self.car.center_y = SCREEN_HEIGHT / 2
 
         self.car_bot = Car_Computer("Picture/Астероид.png", 0.1)
         if self.width == 800:
-            self.car_bot.center_x = CIRCLE_RADIUS_INNER + 350
-            self.car_bot.center_y = SCREEN_HEIGHT / 3
+            self.car_bot.center_x = CIRCLE_RADIUS_INNER - 50
+            self.car_bot.center_y = SCREEN_HEIGHT / 2
             back_button = arcade.gui.UIFlatButton(text="⌂",
                                                width=40,height=40)
             x = 360
             y = 350
         else:
-            self.car_bot.center_x = CIRCLE_RADIUS_INNER + 800
-            self.car_bot.center_y = SCREEN_HEIGHT / 3 + 100
+            self.car_bot.center_x = CIRCLE_RADIUS_INNER + 280
+            self.car_bot.center_y = SCREEN_HEIGHT / 2
             back_button = arcade.gui.UIFlatButton(text="На Главную ⌂",
                                                width=150,height=50)
             x = 660
@@ -1272,15 +1285,17 @@ class LevelSpaceView(arcade.View):
         if key == arcade.key.ESCAPE:
             pause = PauseView(self, LevelSpaceView)
             self.window.show_view(pause)
+            self.uimanager.disable()
             if self.music_player.playing:  # Поставить музыку на паузу
                 self.music_player.pause()
                 self.paused = True
 
         if key == arcade.key.ENTER:
             self.game_started = True
+
+    def on_show_view(self):
+        self.uimanager.enable()
             
-
-
     def on_update(self, delta_time):
 
         if time.time() - self.time_since_last_color_change >= 3:
@@ -1324,7 +1339,7 @@ class LevelSpaceView(arcade.View):
 
         if self.car.crashed:
             if time.time() - self.car.crash_time >= 1:
-                lose_window = LoseViewCrash()
+                lose_window = LoseViewCrash(LevelSpaceView)
                 lose_window.setup()
                 self.window.show_view(lose_window)
                 arcade.sound.stop_sound(self.music_player)
@@ -1377,99 +1392,37 @@ class LevelWorkoutView(arcade.View):
 
         self.wall_list = arcade.SpriteList()
 
-        a = random.randint(1,3)
-        if a == 1:
-            if self.width == 800:
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png",0.25)
-                wall.center_x = ELLIPSE_SEMIMAJOR_AXIS
-                wall.center_y = 140
-            else:
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png",0.4)
-                wall.center_x = ELLIPSE_SEMIMAJOR_AXIS + 280
-                wall.center_y = 160
-            self.wall_list.append(wall)
+        kol_vo = random.randint(1,2)
+        kol_vo_2 = random.randint(1,2)
+        if self.width == 800:
+            for i in range(kol_vo):
+                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", 0.25)
 
-            if self.width == 800:
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png",0.25)
-                wall.center_x = ELLIPSE_SEMIMINOR_AXIS - 60
-                wall.center_y = 400
-            else:
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png",0.4)
-                wall.center_x = ELLIPSE_SEMIMAJOR_AXIS - 80
-                wall.center_y = 440
-            self.wall_list.append(wall)
-
-            if self.width == 800:
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png",0.25)
-                wall.center_x = ELLIPSE_SEMIMINOR_AXIS + 360
-                wall.center_y = 650
-            else:
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png",0.4)
-                wall.center_x = ELLIPSE_SEMIMAJOR_AXIS + 720
-                wall.center_y = 700
-            self.wall_list.append(wall)
-
-        elif a == 2:
-            if self.width == 800:
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png",0.25)
-                wall.center_x = ELLIPSE_SEMIMAJOR_AXIS + 430
-                wall.center_y = 360
-            else:
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png",0.4)
-                wall.center_x = ELLIPSE_SEMIMAJOR_AXIS + 1010
-                wall.center_y = 400
-            self.wall_list.append(wall)
-
-            if self.width == 800:
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png",0.25)
-                wall.center_x = ELLIPSE_SEMIMINOR_AXIS + 20
-                wall.center_y = 160
-            else:
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png",0.4)
-                wall.center_x = ELLIPSE_SEMIMAJOR_AXIS + 40
-                wall.center_y = 170
-            self.wall_list.append(wall)
-
-            if self.width == 800:
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png",0.25)
-                wall.center_x = ELLIPSE_SEMIMINOR_AXIS + 360
-                wall.center_y = 650
-            else:
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png",0.4)
-                wall.center_x = ELLIPSE_SEMIMAJOR_AXIS + 720
-                wall.center_y = 700
-            self.wall_list.append(wall)
-
-            if self.width == 800:
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png",0.25)
-                wall.center_x = ELLIPSE_SEMIMINOR_AXIS + 300
-                wall.center_y = 250
-            else:
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png",0.4)
-                wall.center_x = ELLIPSE_SEMIMAJOR_AXIS + 660
-                wall.center_y = 280
-            self.wall_list.append(wall)
-
+                wall.center_x = random.randrange(180, 600)
+                wall.center_y = random.randrange(630, 660)
+                self.wall_list.append(wall)
         else:
-            if self.width == 800:
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png",0.25)
-                wall.center_x = ELLIPSE_SEMIMAJOR_AXIS + 270
-                wall.center_y = 540
-            else:
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png",0.4)
-                wall.center_x = ELLIPSE_SEMIMAJOR_AXIS + 390
-                wall.center_y = 580
-            self.wall_list.append(wall)
+            for i in range(kol_vo):
+                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", 0.4)
 
-            if self.width == 800:
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png",0.25)
-                wall.center_x = ELLIPSE_SEMIMINOR_AXIS + 20
-                wall.center_y = 160
-            else:
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png",0.4)
-                wall.center_x = ELLIPSE_SEMIMAJOR_AXIS + 40
-                wall.center_y = 170
-            self.wall_list.append(wall)
+                wall.center_x = random.randrange(280, 1000)
+                wall.center_y = random.randrange(660, 720)
+                self.wall_list.append(wall)
+
+        if self.width == 800:
+            for i in range(kol_vo_2):
+                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", 0.25)
+
+                wall.center_x = random.randrange(180, 600)
+                wall.center_y = random.randrange(220, 260)
+                self.wall_list.append(wall)
+        else:
+            for i in range(kol_vo_2):
+                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", 0.4)
+
+                wall.center_x = random.randrange(340, 1000)
+                wall.center_y = random.randrange(260, 300)
+                self.wall_list.append(wall)
 
         self.game_started = False
         self.color = arcade.color.BLACK
@@ -1532,10 +1485,13 @@ class LevelWorkoutView(arcade.View):
         if key == arcade.key.ESCAPE:
             pause = PauseView(self, LevelWorkoutView)
             self.window.show_view(pause)
+            self.uimanager.disable()
         if key == arcade.key.ENTER:
             self.game_started = True
 
-
+    def on_show_view(self):
+        self.uimanager.enable()
+        
     def update(self, delta_time):
         if time.time() - self.time_since_last_color_change >= 3:
             self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
@@ -1568,7 +1524,7 @@ class LevelWorkoutView(arcade.View):
 
         if self.car.crashed:
             if time.time() - self.car.crash_time >= 1:
-                lose_window = LoseViewCrash()
+                lose_window = LoseViewCrash(LevelWorkoutView)
                 lose_window.setup()
                 self.window.show_view(lose_window)
 
@@ -1651,6 +1607,10 @@ class WinView(arcade.View):
 
 class LoseViewCrash(arcade.View):
 
+    def __init__(self, current_level):
+        super().__init__()
+        self.current_level = current_level
+
     def on_show_view(self):
         self.background = arcade.load_texture("Picture/Fon 2.png")
         
@@ -1682,24 +1642,22 @@ class LoseViewCrash(arcade.View):
             width_btn = 300
             height_btn = 65
 
-        back_button = arcade.gui.UIFlatButton(text="На Главную",
+        restart_button = arcade.gui.UIFlatButton(text="Попробовать снова",
                                                width=width_btn, height=height_btn)
         levels_button = arcade.gui.UIFlatButton(text="К выбору уровня", width=width_btn, height=height_btn)
 
         self.uimanager.add(
             arcade.gui.UIAnchorWidget(align_x=250,align_y=-250,anchor_y="center",anchor_x='center',
-                child=back_button))
+                child=restart_button))
         self.uimanager.add(
             arcade.gui.UIAnchorWidget(align_x=-250,align_y=-250,anchor_y="center",anchor_x='center',
                 child=levels_button))
 
-        @back_button.event("on_click")
+        @restart_button.event("on_click")
         def on_click_message(event):
-            main_window = MenuView()
-            main_window.setup()
-            self.window.show_view(main_window)
-            managerclear(self)
-            uimanagerclear(self)
+            game_window = self.current_level()
+            game_window.setup()
+            self.window.show_view(game_window)
 
         @levels_button.event("on_click")
         def on_click_message(event):
@@ -1772,7 +1730,7 @@ class PauseView(arcade.View):
 class Car(arcade.Sprite):
     def __init__(self, image, scale):
         super().__init__(image, scale)
-        self.speed = 90
+        self.speed = 0
         self.inner_lane = True
         self.last_speed_increase_time = time.time()
         self.k = 1
@@ -1814,7 +1772,7 @@ class Car(arcade.Sprite):
 class Car_Computer(arcade.Sprite):
     def __init__(self, image, scale):
         super().__init__(image, scale)
-        self.angle = 120
+        self.angle = 180
         self.inner_lane_bot = True
 
     def update(self, window, player_car):
@@ -1839,7 +1797,7 @@ class Car_Computer(arcade.Sprite):
 class Car_Level2(arcade.Sprite):
     def __init__(self, image, scale):
         super().__init__(image, scale)
-        self.speed = 90
+        self.speed = 345
         self.inner_lane = True
         self.last_speed_increase_time = time.time()
         self.k = 1
@@ -1883,7 +1841,7 @@ class Car_Level2(arcade.Sprite):
 class Car_Computer_Level2(arcade.Sprite):
     def __init__(self, image, scale):
         super().__init__(image, scale)
-        self.speed = 180
+        self.speed = 5
         self.inner_lane_bot = True
         
 

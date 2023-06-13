@@ -1394,35 +1394,69 @@ class LevelWorkoutView(arcade.View):
 
         kol_vo = random.randint(1,2)
         kol_vo_2 = random.randint(1,2)
-        if self.width == 800:
-            for i in range(kol_vo):
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", 0.25)
+        variant = random.randint(1,2)
+        print(variant)
+        if variant == 1:
+            if self.width == 800:
+                for i in range(kol_vo):
+                    wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", 0.25)
 
-                wall.center_x = random.randrange(180, 600)
-                wall.center_y = random.randrange(630, 660)
-                self.wall_list.append(wall)
+                    wall.center_x = random.randrange(180, 600)
+                    wall.center_y = random.randrange(630, 660)
+                    self.wall_list.append(wall)
+            else:
+                for i in range(kol_vo):
+                    wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", 0.4)
+
+                    wall.center_x = random.randrange(340, 1000)
+                    wall.center_y = random.randrange(660, 720)
+                    self.wall_list.append(wall)
+
+            if self.width == 800:
+                for i in range(kol_vo_2):
+                    wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", 0.25)
+
+                    wall.center_x = random.randrange(180, 600)
+                    wall.center_y = random.randrange(220, 260)
+                    self.wall_list.append(wall)
+            else:
+                for i in range(kol_vo_2):
+                    wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", 0.4)
+
+                    wall.center_x = random.randrange(360, 1000)
+                    wall.center_y = random.randrange(260, 300)
+                    self.wall_list.append(wall)
+            
         else:
-            for i in range(kol_vo):
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", 0.4)
+            if self.width == 800:
+                for i in range(kol_vo):
+                    wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", 0.25)
 
-                wall.center_x = random.randrange(280, 1000)
-                wall.center_y = random.randrange(660, 720)
-                self.wall_list.append(wall)
+                    wall.center_x = random.randrange(180, 600)
+                    wall.center_y = random.randrange(540, 580)
+                    self.wall_list.append(wall)
+            else:
+                for i in range(kol_vo):
+                    wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", 0.4)
 
-        if self.width == 800:
-            for i in range(kol_vo_2):
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", 0.25)
+                    wall.center_x = random.randrange(340, 1000)
+                    wall.center_y = random.randrange(570, 620)
+                    self.wall_list.append(wall)
 
-                wall.center_x = random.randrange(180, 600)
-                wall.center_y = random.randrange(220, 260)
-                self.wall_list.append(wall)
-        else:
-            for i in range(kol_vo_2):
-                wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", 0.4)
+            if self.width == 800:
+                for i in range(kol_vo_2):
+                    wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", 0.25)
 
-                wall.center_x = random.randrange(340, 1000)
-                wall.center_y = random.randrange(260, 300)
-                self.wall_list.append(wall)
+                    wall.center_x = random.randrange(180, 600)
+                    wall.center_y = random.randrange(140, 170)
+                    self.wall_list.append(wall)
+            else:
+                for i in range(kol_vo_2):
+                    wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", 0.4)
+
+                    wall.center_x = random.randrange(380, 1000)
+                    wall.center_y = random.randrange(140, 200)
+                    self.wall_list.append(wall)
 
         self.game_started = False
         self.color = arcade.color.BLACK

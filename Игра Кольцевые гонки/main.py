@@ -582,9 +582,9 @@ class RulesView(arcade.View):
 
         bg_tex = load_texture("Picture/Panel.png")
         text_area = UITextArea(x=self.width / 4,
-                               y=self.height / 3.2,
+                               y=self.height / 3.3,
                                width=self.width / 2,
-                               height=self.height / 2.4,
+                               height=self.height / 2.1,
                                text=rules,
                                text_color=(0, 0, 0, 255),
                                font_size = font_size)
@@ -735,8 +735,8 @@ class Level1View(arcade.View):
                 arcade.draw_rectangle_filled(self.width // 2, self.height // 2 - 30, 700, 120, arcade.color.GLITTER + (180,))
                 arcade.draw_text('Нажмите Enter, чтобы запустить уровень', self.width / 5 - 40, self.height / 2 - 60, self.color, 23)
             else:
-                arcade.draw_rectangle_filled(self.width // 2, self.height // 2 - 60, 870, 180, arcade.color.GLITTER + (180,))
-                arcade.draw_text('Нажмите Enter, чтобы запустить уровень', self.width / 5 + 30, self.height / 2 - 60, self.color, 33)
+                arcade.draw_rectangle_filled(self.width // 2, self.height // 2 - 60, 1500, 210, arcade.color.GLITTER + (180,))
+                arcade.draw_text('Нажмите Enter, чтобы запустить уровень', self.width / 5 - 90, self.height / 2 - 60, self.color, 45)
         if self.car.crashed:
             self.car.texture = self.car_crash_texture
             self.car_bot.texture = self.car_bot_crash
@@ -905,7 +905,7 @@ class Level2View(arcade.View):
                 arcade.draw_text('Нажмите Enter, чтобы запустить уровень', self.width / 5 - 40, self.height / 2 - 60, self.color, 23)
             else:
                 arcade.draw_rectangle_filled(self.width // 2, self.height // 2 - 60, 1500, 210, arcade.color.GLITTER + (180,))
-                arcade.draw_text('Нажмите Enter, чтобы запустить уровень', self.width / 5 + 30, self.height / 2 - 60, self.color, 33)
+                arcade.draw_text('Нажмите Enter, чтобы запустить уровень', self.width / 5 - 90, self.height / 2 - 60, self.color, 45)
 
         if self.car.crashed:
             self.car.texture = self.car_crash_texture
@@ -1081,8 +1081,8 @@ class LevelPixelView(arcade.View):
                 arcade.draw_rectangle_filled(self.width // 2, self.height // 2 - 30, 700, 120, arcade.color.GLITTER + (180,))
                 arcade.draw_text('Нажмите Enter, чтобы запустить уровень', self.width / 5 - 40, self.height / 2 - 60, self.color, 23)
             else:
-                arcade.draw_rectangle_filled(self.width // 2, self.height // 2 - 60, 870, 180, arcade.color.GLITTER + (180,))
-                arcade.draw_text('Нажмите Enter, чтобы запустить уровень', self.width / 5 + 30, self.height / 2 - 60, self.color, 33)
+                arcade.draw_rectangle_filled(self.width // 2, self.height // 2 - 60, 1500, 210, arcade.color.GLITTER + (180,))
+                arcade.draw_text('Нажмите Enter, чтобы запустить уровень', self.width / 5 - 90, self.height / 2 - 60, self.color, 45)
         if self.car.crashed:
             self.car.texture = self.car_crash_texture
             self.car_bot.texture = self.car_bot_crash
@@ -1243,12 +1243,12 @@ class LevelSpaceView(arcade.View):
                                             self.width,self.height,
                                             self.background)
         if self.width == 800:
-            arcade.draw_text('ПРОБЕЛ - сменить полосу движения', self.width / 3.2 - 40, self.height / 8 - 50, arcade.color.WHITE, 18)
+            arcade.draw_text('ПРОБЕЛ - сменить полосу движения', 140, 40, arcade.color.WHITE, 24)
             arcade.draw_text('ESCAPE - пауза', 0, self.height / 1.03, arcade.color.WHITE, 18)
             
         if self.width != 800:
             arcade.draw_text('ESCAPE - пауза', 0, self.height / 1.04, arcade.color.WHITE, 25)
-            arcade.draw_text('ПРОБЕЛ - сменить полосу движения', self.width / 4, 30, arcade.color.WHITE, 25)
+            arcade.draw_text('ПРОБЕЛ - сменить полосу движения', self.width / 4, 40, arcade.color.WHITE, 34)
         self.planet.draw()
         arcade.draw_text(self.output,
                          self.width // 2, self.height // 1.1,
@@ -1271,8 +1271,8 @@ class LevelSpaceView(arcade.View):
                 arcade.draw_rectangle_filled(self.width // 2, self.height // 2 - 30, 700, 120, arcade.color.GLITTER + (180,))
                 arcade.draw_text('Нажмите Enter, чтобы запустить уровень', self.width / 5 - 40, self.height / 2 - 60, self.color, 23)
             else:
-                arcade.draw_rectangle_filled(self.width // 2, self.height // 2 - 60, 870, 180, arcade.color.GLITTER + (180,))
-                arcade.draw_text('Нажмите Enter, чтобы запустить уровень', self.width / 5 + 30, self.height / 2 - 60, self.color, 33)
+                arcade.draw_rectangle_filled(self.width // 2, self.height // 2 - 60, 1500, 210, arcade.color.GLITTER + (180,))
+                arcade.draw_text('Нажмите Enter, чтобы запустить уровень', self.width / 5 - 90, self.height / 2 - 60, self.color, 45)
         if self.car.crashed:
             self.car.texture = self.car_crash_texture
 
@@ -1506,7 +1506,7 @@ class LevelWorkoutView(arcade.View):
                 arcade.draw_text('Нажмите Enter, чтобы запустить уровень', self.width / 5 - 40, self.height / 2 - 60, self.color, 23)
             else:
                 arcade.draw_rectangle_filled(self.width // 2, self.height // 2 - 60, 1500, 210, arcade.color.GLITTER + (180,))
-                arcade.draw_text('Нажмите Enter, чтобы запустить уровень', self.width / 5 + 30, self.height / 2 - 60, self.color, 33)
+                arcade.draw_text('Нажмите Enter, чтобы запустить уровень', self.width / 5 - 90, self.height / 2 - 60, self.color, 45)
 
         if self.car.crashed:
             self.car.texture = self.car_crash_texture

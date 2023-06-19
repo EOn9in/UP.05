@@ -785,6 +785,7 @@ class Level1View(arcade.View):
             win_window = WinView()
             win_window.setup()
             self.window.show_view(win_window)
+            self.uimanager.disable()
 
 
         if (seconds % random.randint(4,8) == 0) and (seconds_100s == random.randint(1,100)):
@@ -803,6 +804,7 @@ class Level1View(arcade.View):
                 lose_window = LoseViewCrash(Level1View)
                 lose_window.setup()
                 self.window.show_view(lose_window)
+                self.uimanager.disable()
 
     
 class Level2View(arcade.View):
@@ -948,6 +950,7 @@ class Level2View(arcade.View):
             win_window = WinView()
             win_window.setup()
             self.window.show_view(win_window)
+            self.uimanager.disable()
 
         if (seconds % random.randint(2,6) == 0) and (seconds_100s == random.randint(0,100)):
             self.car_bot.inner_lane_bot = not self.car_bot.inner_lane_bot
@@ -964,6 +967,7 @@ class Level2View(arcade.View):
                 lose_window = LoseViewCrash(Level2View)
                 lose_window.setup()
                 self.window.show_view(lose_window)
+                self.uimanager.disable()
 
 class LevelPixelView(arcade.View):
     def __init__(self):
@@ -1136,6 +1140,7 @@ class LevelPixelView(arcade.View):
             win_window = WinView()
             win_window.setup()
             self.window.show_view(win_window)
+            self.uimanager.disable()
                 
 
 
@@ -1157,6 +1162,7 @@ class LevelPixelView(arcade.View):
                 self.window.show_view(lose_window)
                 arcade.sound.stop_sound(self.music_player)
                 self.music_player = None
+                self.uimanager.disable()
 
     def on_hide_view(self):
         self.resume_music()
@@ -1324,6 +1330,7 @@ class LevelSpaceView(arcade.View):
             win_window = WinView()
             win_window.setup()
             self.window.show_view(win_window)
+            self.uimanager.disable()
                 
 
         if (seconds % random.randint(2,10) == 0) and (seconds_100s == random.randint(1,100)):
@@ -1344,6 +1351,7 @@ class LevelSpaceView(arcade.View):
                 self.window.show_view(lose_window)
                 arcade.sound.stop_sound(self.music_player)
                 self.music_player = None
+                self.uimanager.disable()
 
     def on_hide_view(self):
         self.resume_music()
@@ -1395,13 +1403,12 @@ class LevelWorkoutView(arcade.View):
         kol_vo = random.randint(1,2)
         kol_vo_2 = random.randint(1,2)
         variant = random.randint(1,2)
-        print(variant)
         if variant == 1:
             if self.width == 800:
                 for i in range(kol_vo):
                     wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", 0.25)
 
-                    wall.center_x = random.randrange(180, 600)
+                    wall.center_x = random.randrange(200, 600)
                     wall.center_y = random.randrange(630, 660)
                     self.wall_list.append(wall)
             else:
@@ -1417,7 +1424,7 @@ class LevelWorkoutView(arcade.View):
                     wall = arcade.Sprite(":resources:images/tiles/boxCrate_double.png", 0.25)
 
                     wall.center_x = random.randrange(180, 600)
-                    wall.center_y = random.randrange(220, 260)
+                    wall.center_y = random.randrange(225, 260)
                     self.wall_list.append(wall)
             else:
                 for i in range(kol_vo_2):
@@ -1548,6 +1555,7 @@ class LevelWorkoutView(arcade.View):
             win_window = WinView()
             win_window.setup()
             self.window.show_view(win_window)
+            self.uimanager.disable()
 
         colliding = arcade.check_for_collision_with_list(self.car, self.wall_list)
         if colliding and not self.car.crashed:
@@ -1561,6 +1569,8 @@ class LevelWorkoutView(arcade.View):
                 lose_window = LoseViewCrash(LevelWorkoutView)
                 lose_window.setup()
                 self.window.show_view(lose_window)
+                self.uimanager.disable()
+                
 
 class WinView(arcade.View):
 
@@ -1613,16 +1623,14 @@ class WinView(arcade.View):
             main_window = MenuView()
             main_window.setup()
             self.window.show_view(main_window)
-            managerclear(self)
-            uimanagerclear(self)
+            self.uimanager.disable()
         
         @levels_button.event("on_click")
         def on_click_message(event):
             main_window = StartView()
             main_window.setup()
             self.window.show_view(main_window)
-            managerclear(self)
-            uimanagerclear(self)
+            self.uimanager.disable()
 
 
     def on_draw(self): 
@@ -1643,7 +1651,7 @@ class LoseViewCrash(arcade.View):
 
     def __init__(self, current_level):
         super().__init__()
-        self.current_level = current_level
+        self.current_level = current_level 
 
     def on_show_view(self):
         self.background = arcade.load_texture("Picture/Fon 2.png")
@@ -1692,28 +1700,27 @@ class LoseViewCrash(arcade.View):
             game_window = self.current_level()
             game_window.setup()
             self.window.show_view(game_window)
+            self.uimanager.disable()
 
         @levels_button.event("on_click")
         def on_click_message(event):
             main_window = StartView()
             main_window.setup()
             self.window.show_view(main_window)
-            managerclear(self)
-            uimanagerclear(self)
-
+            self.uimanager.disable()
 
     def on_draw(self):
-        self.width, self.height = self.window.get_size()    
-        self.clear()
-        
-        arcade.draw_lrwh_rectangle_textured(0, 0,
-                                            self.width,self.height,
-                                            self.background)
-        arcade.draw_text("К сожалению, Вы проиграли!", self.width // 2, self.height - 100,
-                         arcade.color.BLACK, font_size=30, anchor_x="center")
-        
-        self.manager.draw()
-        self.uimanager.draw()
+            self.width, self.height = self.window.get_size()    
+            self.clear()
+            
+            arcade.draw_lrwh_rectangle_textured(0, 0,
+                                                self.width,self.height,
+                                                self.background)
+            arcade.draw_text("К сожалению, Вы проиграли!", self.width // 2, self.height - 100,
+                            arcade.color.BLACK, font_size=30, anchor_x="center")
+            
+            self.manager.draw()
+            self.uimanager.draw()
 
 class PauseView(arcade.View):
     def __init__(self, game_view, current_level):
